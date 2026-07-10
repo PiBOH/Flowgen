@@ -20,7 +20,11 @@ Each code has the format `FG-XXX`:
 | `FG-005` | Failed to parse AI response as JSON | `502` | The AI returned content that is not valid JSON. | Simplify your prompt and retry. If it persists, try another model that better follows the system prompt. |
 | `FG-006` | Invalid flowchart structure | `502` | The JSON returned by the AI does not contain valid `nodes` and `edges` arrays. | Retry with a clearer prompt. If the issue continues, switch model. |
 | `FG-007` | Unknown server error | `500` | An unexpected error occurred on the server. | Check the server logs for more details and retry. |
-| `FG-008` | OpenRouter payment required | `502` | OpenRouter returned `402 Payment Required`. Even free models require an active billing profile or positive balance. | Add credits or a payment method in your [OpenRouter billing settings](https://openrouter.ai/settings/billing). |
+| `FG-008` | OpenRouter payment required | `502` | OpenRouter returned `402 Payment Required`. Even models marked as **Free** (e.g. `meta-llama/llama-3.3-70b-instruct:free`) require an active billing profile or a positive account balance on OpenRouter. | Add a payment method or purchase credits in your [OpenRouter billing settings](https://openrouter.ai/settings/billing), then retry. |
+
+## Notes on OpenRouter free models
+
+OpenRouter labels some models as **Free**, but the platform still requires a valid billing profile or positive balance before you can make requests. This is a platform-level requirement and is not controlled by Flowgen. If you only want to use free models, make sure your OpenRouter account has a payment method on file; you will not be charged for requests to free models as long as you stay within their limits.
 
 ## Notes for Vercel deployments
 
