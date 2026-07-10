@@ -43,6 +43,37 @@ Questo documento definisce le regole non negoziabili che ogni assistente AI deve
 - Non introdurre nuove dipendenze senza prima verificarne l'uso esistente nel progetto.
 - Non assumere l'esistenza di librerie o framework: verificarne sempre la presenza in `package.json`, `Cargo.toml`, `requirements.txt` o equivalenti.
 
+## 8. Convenzioni specifiche di Flowgen
+
+### Provider AI e modelli
+
+- Il provider predefinito è **OpenRouter** con modello `meta-llama/llama-3.3-70b-instruct:free`.
+- L'app supporta anche **OpenAI** ed endpoint **Custom** compatibili con OpenAI.
+- Quando si aggiunge un nuovo provider o modello, aggiornare sempre `docs/SUPPORTED-MODELS.md` e, se necessario, `docs/ERROR-LIST.md`.
+- Non commettere mai chiavi API, file `.env` o credenziali nel repository.
+
+### Multilingua (i18n)
+
+- Tutte le stringhe dell'interfaccia utente devono essere gestite tramite i18next.
+- Ogni nuova chiave di traduzione deve essere aggiunta in tutti i file in `i18n/locales/` (en, it, fr, es, de).
+- Le traduzioni non devono essere perfette al 100%, ma devono essere complete.
+
+### Documentazione
+
+- Aggiornare `CHANGELOG.md` per ogni modifica rilevante.
+- Mantenere aggiornata la documentazione in `/docs` quando si toccano funzionalità correlate.
+- Aggiornare `README.md` quando cambiano istruzioni di setup, deploy o provider supportati.
+
+### Esportazione e flowchart
+
+- I formati di esportazione supportati sono: `.fprg`, `.json`, `.svg`, `.png`, `.jpg`, `.pdf`.
+- L'esportatore `.fprg` è euristico: per grafi complessi con merge condivisi ricade su una sequenza flat. Documentare eventuali limitazioni.
+
+### Verifica
+
+- Prima di dichiarare completata un'attività, eseguire `npm run typecheck` e `npm run lint`.
+- Per modifiche significative, richiedere una code review con `code-reviewer-kimi`.
+
 ---
 
 *Questo documento è vincolante per ogni sessione di sviluppo su Flowgen.*
