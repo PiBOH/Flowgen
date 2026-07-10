@@ -47,8 +47,9 @@ Questo documento definisce le regole non negoziabili che ogni assistente AI deve
 
 ### Provider AI e modelli
 
-- Il provider predefinito è **OpenRouter** con modello `meta-llama/llama-3.3-70b-instruct:free`.
-- L'app supporta anche **OpenAI**, **Google Gemini** (provider nativo) ed endpoint **Custom** compatibili con OpenAI.
+- Il provider predefinito è **Google Gemini** con modello `gemini-1.5-flash`.
+- L'app supporta anche **OpenRouter**, **OpenAI** ed endpoint **Custom** compatibili con OpenAI.
+- Le chiavi API vengono lette esclusivamente dalle variabili d'ambiente server-side (`GEMINI_API_KEY`, `OPENROUTER_API_KEY`, `OPENAI_API_KEY`, `CUSTOM_API_KEY`); non devono essere inserite nell'interfaccia utente.
 - Quando si aggiunge un nuovo provider o modello, aggiornare sempre `docs/SUPPORTED-MODELS.md` e, se necessario, `docs/ERROR-LIST.md`.
 - Non commettere mai chiavi API, file `.env` o credenziali nel repository.
 

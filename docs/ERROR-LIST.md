@@ -14,7 +14,7 @@ Each code has the format `FG-XXX`:
 | Code | Error | HTTP Status | Explanation | Solution |
 |---|---|---|---|---|
 | `FG-001` | Prompt is required | `400` | The request body did not contain a valid `prompt` string. | Enter a description of the algorithm or process you want to visualize. |
-| `FG-002` | API key is missing | `400` | No API key was provided in the Settings panel and the corresponding server environment variable is not configured. | Add your API key in the Settings panel, or set the provider-specific environment variable (`OPENROUTER_API_KEY`, `OPENAI_API_KEY`, `GEMINI_API_KEY`) in your `.env` / `.env.local` file (or in Vercel Environment Variables). |
+| `FG-002` | API key is missing | `400` | The provider-specific server environment variable is not configured. | Set the provider-specific environment variable (`GEMINI_API_KEY`, `OPENROUTER_API_KEY`, `OPENAI_API_KEY`, `CUSTOM_API_KEY`) in your `.env` / `.env.local` file (or in Vercel Environment Variables). |
 | `FG-003` | AI provider error | `502` | The upstream AI provider returned a non-2xx response (e.g. `401 Unauthorized`, `429 Too Many Requests`, `500 Internal Server Error`). | Check the `details` field in the response. Verify that your API key is valid, that you have enough credits, and that the selected model is available. |
 | `FG-004` | Empty response from AI provider | `502` | The AI provider returned a response, but the content is empty. | Retry the request. If the problem persists, try a different model or provider. |
 | `FG-005` | Failed to parse AI response as JSON | `502` | The AI returned content that is not valid JSON. | Simplify your prompt and retry. If it persists, try another model that better follows the system prompt. |

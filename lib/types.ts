@@ -46,7 +46,6 @@ export interface GenerateRequest {
   prompt: string;
   provider?: 'openai' | 'openrouter' | 'gemini' | 'custom';
   model?: string;
-  apiKey?: string;
   apiUrl?: string;
   jsonMode?: boolean;
 }
@@ -54,7 +53,6 @@ export interface GenerateRequest {
 export interface AiSettings {
   provider: 'openai' | 'openrouter' | 'gemini' | 'custom';
   model: string;
-  apiKey: string;
   apiUrl: string;
 }
 

@@ -11,7 +11,6 @@ interface Preset {
   label: string;
   model: string;
   apiUrl: string;
-  apiKeyHint: string;
 }
 
 const presets: Record<string, Preset> = {
@@ -19,19 +18,16 @@ const presets: Record<string, Preset> = {
     label: 'Ollama (local)',
     model: 'llama3.1',
     apiUrl: 'http://localhost:11434/v1/chat/completions',
-    apiKeyHint: 'Usually empty for local Ollama.',
   },
   sambanova: {
     label: 'SambaNova Cloud (free tier)',
     model: 'Meta-Llama-3.3-70B-Instruct',
     apiUrl: 'https://api.sambanova.ai/v1/chat/completions',
-    apiKeyHint: 'Get your key from cloud.sambanova.ai.',
   },
   github: {
     label: 'GitHub Models (free tier)',
     model: 'meta-llama-3.3-70b-instruct',
     apiUrl: 'https://models.inference.ai.azure.com/chat/completions',
-    apiKeyHint: 'Use a GitHub Personal Access Token.',
   },
 };
 
@@ -47,25 +43,22 @@ const defaultModels: Record<AiSettings['provider'], string> = {
   custom: '',
 };
 
-function findActivePreset(value: AiSettings): Preset | null {
-  if (value.provider !== 'custom') return null;
-  return (
-    Object.values(presets).find(
-      (preset) => preset.model === value.model && preset.apiUrl === value.apiUrl
-    ) ?? null
-  );
-}
+const envKeyNames: Record<AiSettings['provider'], string> = {
+  openai: 'OPENAI_API_KEY',
+  openrouter: 'OPENROUTER_API_KEY',
+  gemini: 'GEMINI_API_KEY',
+  custom: 'CUSTOM_API_KEY',
+};
 
 export default function SettingsPanel({ value, onChange }: SettingsPanelProps) {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
-  const activePreset = findActivePreset(value);
 
   useOnClickOutside(panelRef, () => setIsOpen(false));
 
   const handleChange = (field: keyof AiSettings, newValue: string) => {
-    const next = { ...value, [field]: field === 'apiKey' ? newValue.trim() : newValue };
+    const next = { ...value, [field]: newValue };
     if (field === 'provider') {
       next.model = defaultModels[next.provider];
     }
@@ -154,7 +147,6 @@ export default function SettingsPanel({ value, onChange }: SettingsPanelProps) {
                             provider: 'custom',
                             model: preset.model,
                             apiUrl: preset.apiUrl,
-                            apiKey: '',
                           })
                         }
                         className="px-2 py-1 text-xs border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
@@ -180,27 +172,11 @@ export default function SettingsPanel({ value, onChange }: SettingsPanelProps) {
               </div>
             )}
 
-            <div>
-              <label className="block text-xs font-medium text-gray-700 mb-1">
-                {t('apiKey') as string}
-              </label>
-              <input
-                type="password"
-                value={value.apiKey}
-                onChange={(e) => handleChange('apiKey', e.target.value)}
-                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
-                placeholder={
-                  value.provider === 'gemini'
-                    ? (t('geminiApiKeyPlaceholder') as string)
-                    : (t('apiKeyPlaceholder') as string)
-                }
-              />
-              <p className="text-xs text-gray-500 mt-1">
-                {value.provider === 'gemini'
-                  ? (t('geminiApiKeyHint') as string)
-                  : activePreset
-                    ? activePreset.apiKeyHint
-                    : (t('apiKeyHint') as string)}
+            <div className="p-2 bg-gray-50 border border-gray-200 rounded-md">
+              <p className="text-xs text-gray-600">
+                {value.provider === 'custom'
+                  ? `Set your API key in the ${envKeyNames[value.provider]} environment variable.`
+                  : `Set ${envKeyNames[value.provider]} in your .env file or Vercel Environment Variables.`}
               </p>
             </div>
           </div>

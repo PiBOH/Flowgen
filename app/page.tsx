@@ -34,9 +34,8 @@ const defaultFlowchart: FlowchartModel = {
 };
 
 const defaultSettings: AiSettings = {
-  provider: 'openrouter',
-  model: 'meta-llama/llama-3.3-70b-instruct:free',
-  apiKey: '',
+  provider: 'gemini',
+  model: 'gemini-1.5-flash',
   apiUrl: '',
 };
 
@@ -53,12 +52,19 @@ export default function Home() {
   useEffect(() => {
     fetch('/api/config')
       .then((res) => res.json())
-      .then((data) => setHasServerKey(data.hasOpenRouterKey))
+      .then((data) => {
+        const keyMap: Record<AiSettings['provider'], boolean> = {
+          openrouter: data.hasOpenRouterKey,
+          openai: data.hasOpenAiKey,
+          gemini: data.hasGeminiKey,
+          custom: data.hasCustomKey,
+        };
+        setHasServerKey(keyMap[settings.provider]);
+      })
       .catch(() => setHasServerKey(false));
-  }, []);
+  }, [settings.provider]);
 
-  const showApiKeyWarning =
-    settings.provider === 'openrouter' && hasServerKey === false && !settings.apiKey;
+  const showApiKeyWarning = hasServerKey === false;
 
   const handleLoadExample = () => {
     setPrompt(examplePrompt);
@@ -78,7 +84,6 @@ export default function Home() {
           prompt,
           provider: settings.provider,
           model: settings.model || undefined,
-          apiKey: settings.apiKey || undefined,
           apiUrl: settings.apiUrl || undefined,
         }),
       });

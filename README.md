@@ -48,19 +48,22 @@ Create a `.env` file in the project root (or use `.env.local` for local override
 
 | Variable | Description |
 |---|---|
-| `OPENROUTER_API_KEY` | OpenRouter API key (default provider) |
+| `GEMINI_API_KEY` | Google Gemini API key (default provider) |
+| `OPENROUTER_API_KEY` | OpenRouter API key |
 | `OPENAI_API_KEY` | OpenAI API key |
-| `GEMINI_API_KEY` | Google Gemini API key from AI Studio |
+| `CUSTOM_API_KEY` | API key for custom endpoints |
 | `NEXT_PUBLIC_APP_URL` | Public app URL |
 
 ## AI Providers
 
 The API route supports:
 
-- **OpenRouter** (default — e.g. `meta-llama/llama-3.3-70b-instruct:free`)
+- **Google Gemini** (default — e.g. `gemini-1.5-flash`, free tier via Google AI Studio)
+- **OpenRouter** (e.g. `meta-llama/llama-3.3-70b-instruct:free`)
 - **OpenAI** (e.g. `gpt-4o-mini`)
-- **Google Gemini** (e.g. `gemini-1.5-flash`, free tier via Google AI Studio)
 - **Custom endpoints** compatible with OpenAI chat completions format
+
+API keys are read from server-side environment variables only; they are not entered in the UI.
 
 ### Note on OpenRouter "free" models
 

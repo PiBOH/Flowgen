@@ -85,13 +85,13 @@ const GEMINI_RESPONSE_SCHEMA = {
 };
 
 function getApiConfig(body: GenerateRequest) {
-  const provider = body.provider || 'openrouter';
+  const provider = body.provider || 'gemini';
 
   switch (provider) {
     case 'openrouter': {
       const headers: Record<string, string> = {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${body.apiKey || process.env.OPENROUTER_API_KEY?.trim() || ''}`,
+        Authorization: `Bearer ${process.env.OPENROUTER_API_KEY?.trim() || ''}`,
       };
       const referer = process.env.NEXT_PUBLIC_APP_URL || 'https://flowgen.vercel.app';
       if (referer) headers['HTTP-Referer'] = referer;
@@ -109,7 +109,7 @@ function getApiConfig(body: GenerateRequest) {
         model: geminiModel,
         headers: {
           'Content-Type': 'application/json',
-          'x-goog-api-key': body.apiKey || process.env.GEMINI_API_KEY?.trim() || '',
+          'x-goog-api-key': process.env.GEMINI_API_KEY?.trim() || '',
         },
       };
     }
@@ -119,7 +119,7 @@ function getApiConfig(body: GenerateRequest) {
         model: body.model || 'default',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${body.apiKey || ''}`,
+          Authorization: `Bearer ${process.env.CUSTOM_API_KEY?.trim() || ''}`,
         },
       };
     default:
@@ -128,7 +128,7 @@ function getApiConfig(body: GenerateRequest) {
         model: body.model || 'gpt-4o-mini',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${body.apiKey || process.env.OPENAI_API_KEY?.trim() || ''}`,
+          Authorization: `Bearer ${process.env.OPENAI_API_KEY?.trim() || ''}`,
         },
       };
   }
@@ -136,19 +136,25 @@ function getApiConfig(body: GenerateRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const body: GenerateRequest = await req.json();
-    const apiKey = body.apiKey?.trim();
-    const request: GenerateRequest = { ...body, apiKey };
+    const request: GenerateRequest = await req.json();
 
     if (!request.prompt || typeof request.prompt !== 'string') {
       return NextResponse.json({ code: 'FG-001', error: 'Prompt is required' }, { status: 400 });
     }
 
+    const provider = request.provider || 'gemini';
     const config = getApiConfig(request);
 
+    if (provider === 'custom' && !config.url) {
+      return NextResponse.json(
+        { code: 'FG-002', error: 'Custom API URL is missing. Set a valid endpoint URL.' },
+        { status: 400 }
+      );
+    }
+
     const isKeyMissing =
-      request.provider === 'gemini'
-        ? !(request.apiKey || process.env.GEMINI_API_KEY?.trim())
+      provider === 'gemini'
+        ? !process.env.GEMINI_API_KEY?.trim()
         : !config.headers.Authorization || config.headers.Authorization === 'Bearer ';
 
     if (isKeyMissing) {
@@ -156,7 +162,7 @@ export async function POST(req: NextRequest) {
         {
           code: 'FG-002',
           error:
-            'API key is missing. Add it in the Settings panel or set the appropriate environment variable in .env (or .env.local for local overrides).'
+            'API key is missing. Set the appropriate environment variable in .env (or .env.local for local overrides).'
         },
         { status: 400 }
       );

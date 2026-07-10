@@ -1,17 +1,17 @@
 # Flowgen — Supported Models
 
-Flowgen supports both built-in providers and any AI provider that exposes an OpenAI-compatible chat completions endpoint. Below are the officially supported providers and a list of recommended models.
+Flowgen supports both built-in providers and any AI provider that exposes an OpenAI-compatible chat completions endpoint. API keys are read from server-side environment variables only.
 
 ## Supported providers
 
 | Provider | Default model | Notes |
 |---|---|---|
-| **OpenRouter** | `meta-llama/llama-3.3-70b-instruct:free` | Default provider. Supports many open and commercial models. |
+| **Google Gemini** | `gemini-1.5-flash` | **Default provider**. Native Gemini API support; free tier available via Google AI Studio. |
+| **OpenRouter** | `meta-llama/llama-3.3-70b-instruct:free` | Supports many open and commercial models. |
 | **OpenAI** | `gpt-4o-mini` | Reliable JSON output, good instruction following. |
-| **Google Gemini** | `gemini-1.5-flash` | Native Gemini API support; free tier available via Google AI Studio. |
 | **Custom** | — | Any endpoint compatible with `/v1/chat/completions`. |
 
-For every built-in provider, you can either paste your API key in the Settings panel or set the corresponding server-side environment variable (`OPENROUTER_API_KEY`, `OPENAI_API_KEY`, `GEMINI_API_KEY`) in `.env`, `.env.local` or Vercel Environment Variables.
+For every built-in provider, set the corresponding server-side environment variable (`GEMINI_API_KEY`, `OPENROUTER_API_KEY`, `OPENAI_API_KEY`) in `.env`, `.env.local` or Vercel Environment Variables.
 
 ## Recommended models on OpenRouter
 
@@ -82,7 +82,7 @@ If you do not have a credit card, you still have a few options.
 ## Choosing a model
 
 - For **best results**, use `gpt-4o` or `claude-3.5-sonnet`.
-- For **free usage**, use Google Gemini with a key from AI Studio, or use `meta-llama/llama-3.3-70b-instruct:free` on OpenRouter (requires billing profile).
+- For **free usage**, use **Google Gemini** with a key from AI Studio (default), or use `meta-llama/llama-3.3-70b-instruct:free` on OpenRouter (requires billing profile).
 - For **local or self-hosted models**, use the **Custom** provider with your own endpoint.
 
 ## Adding a custom provider
