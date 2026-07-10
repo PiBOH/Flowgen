@@ -1,6 +1,6 @@
 # Flowgen — Supported Models
 
-Flowgen can use any AI provider that exposes an OpenAI-compatible chat completions endpoint. Below are the officially supported providers and a list of recommended models.
+Flowgen supports both built-in providers and any AI provider that exposes an OpenAI-compatible chat completions endpoint. Below are the officially supported providers and a list of recommended models.
 
 ## Supported providers
 
@@ -8,7 +8,10 @@ Flowgen can use any AI provider that exposes an OpenAI-compatible chat completio
 |---|---|---|
 | **OpenRouter** | `meta-llama/llama-3.3-70b-instruct:free` | Default provider. Supports many open and commercial models. |
 | **OpenAI** | `gpt-4o-mini` | Reliable JSON output, good instruction following. |
+| **Google Gemini** | `gemini-1.5-flash` | Native Gemini API support; free tier available via Google AI Studio. |
 | **Custom** | — | Any endpoint compatible with `/v1/chat/completions`. |
+
+For every built-in provider, you can either paste your API key in the Settings panel or set the corresponding server-side environment variable (`OPENROUTER_API_KEY`, `OPENAI_API_KEY`, `GEMINI_API_KEY`) in `.env`, `.env.local` or Vercel Environment Variables.
 
 ## Recommended models on OpenRouter
 
@@ -59,7 +62,17 @@ If you do not have a credit card, you still have a few options.
 - **Model**: `meta-llama-3.3-70b-instruct`
 - Use a GitHub Personal Access Token as the API key.
 
-### 4. OVHcloud AI Endpoints (anonymous tier)
+### 4. Google Gemini (free tier)
+
+[Google Gemini](https://ai.google.dev/) offers a free tier with rate limits. Note that there is no "Gemini 3.5 Flash"; the correct model names are `gemini-1.5-flash` or `gemini-2.0-flash`.
+
+1. Get a free API key from [Google AI Studio](https://aistudio.google.com/app/apikey).
+2. In Flowgen Settings, select **Google Gemini** as the provider.
+3. Paste your API key and, if you want, change the model (default is `gemini-1.5-flash`).
+
+**Note**: the key from AI Studio is sent to the Gemini API in a request header. Make sure you keep it secret and do not commit it to version control. You can also set `GEMINI_API_KEY` on the server (`.env`, `.env.local` or Vercel Environment Variables) and leave the Settings field empty.
+
+### 5. OVHcloud AI Endpoints (anonymous tier)
 
 [OVHcloud AI Endpoints](https://ai.endpoints.ovh.net/) has an fully anonymous tier with no API key required, but it is limited to 2 requests per minute.
 
@@ -69,7 +82,7 @@ If you do not have a credit card, you still have a few options.
 ## Choosing a model
 
 - For **best results**, use `gpt-4o` or `claude-3.5-sonnet`.
-- For **free usage**, use `meta-llama/llama-3.3-70b-instruct:free` on OpenRouter, but remember to set up billing.
+- For **free usage**, use Google Gemini with a key from AI Studio, or use `meta-llama/llama-3.3-70b-instruct:free` on OpenRouter (requires billing profile).
 - For **local or self-hosted models**, use the **Custom** provider with your own endpoint.
 
 ## Adding a custom provider

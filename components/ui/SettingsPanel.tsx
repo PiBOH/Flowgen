@@ -43,6 +43,7 @@ interface SettingsPanelProps {
 const defaultModels: Record<AiSettings['provider'], string> = {
   openai: 'gpt-4o-mini',
   openrouter: 'meta-llama/llama-3.3-70b-instruct:free',
+  gemini: 'gemini-1.5-flash',
   custom: '',
 };
 
@@ -64,7 +65,7 @@ export default function SettingsPanel({ value, onChange }: SettingsPanelProps) {
   useOnClickOutside(panelRef, () => setIsOpen(false));
 
   const handleChange = (field: keyof AiSettings, newValue: string) => {
-    const next = { ...value, [field]: newValue };
+    const next = { ...value, [field]: field === 'apiKey' ? newValue.trim() : newValue };
     if (field === 'provider') {
       next.model = defaultModels[next.provider];
     }
@@ -85,7 +86,7 @@ export default function SettingsPanel({ value, onChange }: SettingsPanelProps) {
       </button>
 
       {isOpen && (
-        <div id="settings-panel" className="absolute right-0 top-full mt-2 w-80 bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-50">
+        <div id="settings-panel" className="absolute right-0 top-full mt-2 w-80 max-w-[calc(100vw-1rem)] bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-50">
           <h3 className="text-sm font-semibold text-gray-900 mb-3">
             {t('aiSettings') as string}
           </h3>
@@ -102,6 +103,7 @@ export default function SettingsPanel({ value, onChange }: SettingsPanelProps) {
               >
                 <option value="openai">OpenAI</option>
                 <option value="openrouter">OpenRouter</option>
+                <option value="gemini">Google Gemini</option>
                 <option value="custom">Custom</option>
               </select>
             </div>
@@ -127,7 +129,11 @@ export default function SettingsPanel({ value, onChange }: SettingsPanelProps) {
                 value={value.model}
                 onChange={(e) => handleChange('model', e.target.value)}
                 className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
-                placeholder={t('modelPlaceholder') as string}
+                placeholder={
+                  value.provider === 'gemini'
+                    ? (t('geminiModelPlaceholder') as string)
+                    : (t('modelPlaceholder') as string)
+                }
               />
             </div>
 
@@ -183,10 +189,18 @@ export default function SettingsPanel({ value, onChange }: SettingsPanelProps) {
                 value={value.apiKey}
                 onChange={(e) => handleChange('apiKey', e.target.value)}
                 className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
-                placeholder={t('apiKeyPlaceholder') as string}
+                placeholder={
+                  value.provider === 'gemini'
+                    ? (t('geminiApiKeyPlaceholder') as string)
+                    : (t('apiKeyPlaceholder') as string)
+                }
               />
               <p className="text-xs text-gray-500 mt-1">
-                {activePreset ? activePreset.apiKeyHint : (t('apiKeyHint') as string)}
+                {value.provider === 'gemini'
+                  ? (t('geminiApiKeyHint') as string)
+                  : activePreset
+                    ? activePreset.apiKeyHint
+                    : (t('apiKeyHint') as string)}
               </p>
             </div>
           </div>

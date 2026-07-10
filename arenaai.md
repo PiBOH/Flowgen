@@ -48,7 +48,7 @@ Questo documento definisce le regole non negoziabili che ogni assistente AI deve
 ### Provider AI e modelli
 
 - Il provider predefinito è **OpenRouter** con modello `meta-llama/llama-3.3-70b-instruct:free`.
-- L'app supporta anche **OpenAI** ed endpoint **Custom** compatibili con OpenAI.
+- L'app supporta anche **OpenAI**, **Google Gemini** (provider nativo) ed endpoint **Custom** compatibili con OpenAI.
 - Quando si aggiunge un nuovo provider o modello, aggiornare sempre `docs/SUPPORTED-MODELS.md` e, se necessario, `docs/ERROR-LIST.md`.
 - Non commettere mai chiavi API, file `.env` o credenziali nel repository.
 

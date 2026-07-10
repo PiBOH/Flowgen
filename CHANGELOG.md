@@ -12,6 +12,7 @@ Il formato è basato su [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 - Generazione di flowchart tramite prompt testuale con supporto multi-provider:
   - OpenRouter (provider predefinito, modello `meta-llama/llama-3.3-70b-instruct:free`).
   - OpenAI.
+  - Google Gemini (provider nativo con API key da Google AI Studio).
   - Endpoint custom compatibili con OpenAI.
 - Supporto multilingua completo (i18next) per inglese, francese, spagnolo, tedesco e italiano.
 - Esportazione dei flowchart in tutti i formati richiesti:
@@ -21,7 +22,7 @@ Il formato è basato su [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
   - `.pdf` tramite `jspdf`.
 - Pannello impostazioni AI per scegliere provider, modello, URL API e chiave API.
 - Endpoint `/api/config` per esporre lo stato della chiave server senza rivelarla.
-- Codici errore strutturati (`FG-001` ... `FG-008`) con documentazione in `docs/ERROR-LIST.md`.
+- Codici errore strutturati (`FG-001` ... `FG-010`) con documentazione in `docs/ERROR-LIST.md`.
 - Documentazione iniziale in `/docs`: `DISCLAIMER.md`, `PRIVACY.md`, `SECURITY.md`, `ERROR-LIST.md`, `SUPPORTED-MODELS.md`.
 - `README.md` aggiornato con istruzioni di setup, variabili d'ambiente e link alla documentazione.
 - Esempio di flowchart caricabile su richiesta per aiutare l'utente a capire come scrivere un prompt.
