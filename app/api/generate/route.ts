@@ -104,12 +104,13 @@ function getApiConfig(body: GenerateRequest) {
     }
     case 'gemini': {
       const geminiModel = body.model || 'gemini-1.5-flash';
+      const geminiApiKey = process.env.GEMINI_API_KEY?.trim() || '';
       return {
-        url: `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(geminiModel)}:generateContent`,
+        url: `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(geminiModel)}:generateContent?key=${encodeURIComponent(geminiApiKey)}`,
         model: geminiModel,
         headers: {
           'Content-Type': 'application/json',
-          'x-goog-api-key': process.env.GEMINI_API_KEY?.trim() || '',
+          'x-goog-api-key': geminiApiKey,
         },
       };
     }
@@ -204,9 +205,27 @@ export async function POST(req: NextRequest) {
     if (!response.ok) {
       const errorText = await response.text();
       const isPaymentRequired = response.status === 402;
-      const errorMessage = isPaymentRequired
-        ? 'OpenRouter requires a payment method or positive balance. Even free models need an active billing profile. Visit https://openrouter.ai/settings/billing to add credits or a payment method.'
-        : `AI provider error: ${response.status} ${response.statusText}`;
+      const isNotFound = response.status === 404;
+      let extraDetail = '';
+      try {
+        const parsed = JSON.parse(errorText);
+        if (parsed.error?.message) extraDetail = ` — ${parsed.error.message}`;
+        else if (parsed.error) extraDetail = ` — ${JSON.stringify(parsed.error)}`;
+      } catch {
+        // ignore non-JSON error bodies
+      }
+
+      let errorMessage: string;
+
+      // eslint-disable-next-line no-console
+      console.error(`AI provider error (${response.status} ${response.statusText}) for ${provider}: ${extraDetail || errorText.slice(0, 200)}`);
+      if (isPaymentRequired) {
+        errorMessage = 'OpenRouter requires a payment method or positive balance. Even free models need an active billing profile. Visit https://openrouter.ai/settings/billing to add credits or a payment method.';
+      } else if (isNotFound && provider === 'gemini') {
+        errorMessage = `Gemini model not found (404). Verify the model name "${config.model}" and that your API key has access to Gemini.${extraDetail}`;
+      } else {
+        errorMessage = `AI provider error: ${response.status} ${response.statusText}${extraDetail}`;
+      }
 
       return NextResponse.json(
         { code: isPaymentRequired ? 'FG-008' : 'FG-003', error: errorMessage, details: errorText },

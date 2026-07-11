@@ -91,7 +91,8 @@ export default function Home() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || t('errorGenerating'));
+        const detail = data.details ? `\n\nDetails: ${data.details}` : '';
+        throw new Error((data.error || t('errorGenerating')) + detail);
       }
 
       setFlowchart(data.flowchart);
@@ -140,7 +141,7 @@ export default function Home() {
           )}
 
           {error && (
-            <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+            <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm whitespace-pre-wrap">
               {error}
             </div>
           )}
