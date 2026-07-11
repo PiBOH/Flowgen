@@ -22,12 +22,18 @@
   "model": "Modelo",
   "modelPlaceholder": "p. ej. gpt-4o-mini",
   "apiUrl": "URL de la API",
-  "geminiModelPlaceholder": "p. ej. gemini-1.5-flash",
+  "geminiModelPlaceholder": "p. ej. gemini-1.5-flash-latest",
   "openRouterFreeTooltip": "OpenRouter etiqueta algunos modelos como gratuitos, pero aún requiere un perfil de facturación activo o un saldo positivo para realizar solicitudes.",
   "missingApiKey": "Falta la clave API. Define la variable de entorno específica del proveedor en .env.",
   "missingServerApiKey": "No hay ninguna clave API configurada en el servidor. Define la variable de entorno específica del proveedor en .env.",
   "errorGenerating": "Error al generar el diagrama. Inténtalo de nuevo.",
   "loadExample": "Cargar ejemplo",
   "emptyPrompt": "Por favor, introduce una descripción.",
-  "translationNotice": "Las traducciones pueden no ser 100% exactas."
+  "translationNotice": "Las traducciones pueden no ser 100% exactas.",
+  "examplePrompt": "Pídele al usuario un número e imprime si es par o impar.",
+  "info": "Info",
+  "version": "Versión",
+  "author": "Autor",
+  "repository": "Repositorio",
+  "license": "Licencia"
 }

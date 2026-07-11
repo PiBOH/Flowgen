@@ -7,8 +7,9 @@ import PromptInput from '@/components/ui/PromptInput';
 import ExportToolbar from '@/components/ui/ExportToolbar';
 import LanguageSelector from '@/components/ui/LanguageSelector';
 import SettingsPanel from '@/components/ui/SettingsPanel';
+import AppInfo from '@/components/ui/AppInfo';
 import { FlowchartModel, AiSettings } from '@/lib/types';
-import { examplePrompt, exampleFlowchart } from '@/lib/examples';
+import { exampleFlowchart } from '@/lib/examples';
 
 const FlowchartCanvas = dynamic(() => import('@/components/flowchart/FlowchartCanvas'), {
   ssr: false,
@@ -35,7 +36,7 @@ const defaultFlowchart: FlowchartModel = {
 
 const defaultSettings: AiSettings = {
   provider: 'gemini',
-  model: 'gemini-1.5-flash',
+  model: 'gemini-1.5-flash-latest',
   apiUrl: '',
 };
 
@@ -67,7 +68,7 @@ export default function Home() {
   const showApiKeyWarning = hasServerKey === false;
 
   const handleLoadExample = () => {
-    setPrompt(examplePrompt);
+    setPrompt(t('examplePrompt') as string);
     setFlowchart(exampleFlowchart);
     setError(null);
   };
@@ -114,6 +115,7 @@ export default function Home() {
           <div className="flex items-center gap-3">
             <LanguageSelector />
             <SettingsPanel value={settings} onChange={setSettings} />
+            <AppInfo />
           </div>
         </div>
       </header>

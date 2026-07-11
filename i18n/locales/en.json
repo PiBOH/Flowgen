@@ -22,12 +22,18 @@
   "model": "Model",
   "modelPlaceholder": "e.g. gpt-4o-mini",
   "apiUrl": "API URL",
-  "geminiModelPlaceholder": "e.g. gemini-1.5-flash",
+  "geminiModelPlaceholder": "e.g. gemini-1.5-flash-latest",
   "openRouterFreeTooltip": "OpenRouter labels some models as Free, but still requires an active billing profile or positive balance to make requests.",
   "missingApiKey": "API key is missing. Set the provider-specific environment variable in .env.",
   "missingServerApiKey": "No API key is configured on the server. Set the provider-specific environment variable in .env.",
   "errorGenerating": "Error generating flowchart. Please try again.",
   "loadExample": "Load example",
   "emptyPrompt": "Please enter a description.",
-  "translationNotice": "Translations may not be 100% accurate."
+  "translationNotice": "Translations may not be 100% accurate.",
+  "examplePrompt": "Ask the user for a number and print whether it is even or odd.",
+  "info": "Info",
+  "version": "Version",
+  "author": "Author",
+  "repository": "Repository",
+  "license": "License"
 }

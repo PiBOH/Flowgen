@@ -22,12 +22,18 @@
   "model": "Modèle",
   "modelPlaceholder": "ex. gpt-4o-mini",
   "apiUrl": "URL API",
-  "geminiModelPlaceholder": "ex. gemini-1.5-flash",
+  "geminiModelPlaceholder": "ex. gemini-1.5-flash-latest",
   "openRouterFreeTooltip": "OpenRouter marque certains modèles comme gratuits, mais nécessite toujours un profil de facturation actif ou un solde positif pour effectuer des requêtes.",
   "missingApiKey": "Clé API manquante. Définissez la variable d'environnement spécifique au fournisseur dans .env.",
   "missingServerApiKey": "Aucune clé API n'est configurée sur le serveur. Définissez la variable d'environnement spécifique au fournisseur dans .env.",
   "errorGenerating": "Erreur lors de la génération du diagramme. Veuillez réessayer.",
   "loadExample": "Charger un exemple",
   "emptyPrompt": "Veuillez entrer une description.",
-  "translationNotice": "Les traductions peuvent ne pas être 100% exactes."
+  "translationNotice": "Les traductions peuvent ne pas être 100% exactes.",
+  "examplePrompt": "Demandez à l'utilisateur un nombre et affichez s'il est pair ou impair.",
+  "info": "Info",
+  "version": "Version",
+  "author": "Auteur",
+  "repository": "Dépôt GitHub",
+  "license": "Licence"
 }

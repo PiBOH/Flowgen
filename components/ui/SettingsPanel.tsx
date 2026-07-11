@@ -39,7 +39,7 @@ interface SettingsPanelProps {
 const defaultModels: Record<AiSettings['provider'], string> = {
   openai: 'gpt-4o-mini',
   openrouter: 'meta-llama/llama-3.3-70b-instruct:free',
-  gemini: 'gemini-1.5-flash',
+  gemini: 'gemini-1.5-flash-latest',
   custom: '',
 };
 

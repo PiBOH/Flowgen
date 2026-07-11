@@ -1,8 +1,5 @@
 import { FlowchartModel } from './types';
 
-export const examplePrompt =
-  'Ask the user for a number and print whether it is even or odd.';
-
 export const exampleFlowchart: FlowchartModel = {
   nodes: [
     { id: 'start', type: 'start', position: { x: 250, y: 0 }, data: { label: 'Start' } },

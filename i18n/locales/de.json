@@ -22,12 +22,18 @@
   "model": "Modell",
   "modelPlaceholder": "z.B. gpt-4o-mini",
   "apiUrl": "API-URL",
-  "geminiModelPlaceholder": "z.B. gemini-1.5-flash",
+  "geminiModelPlaceholder": "z.B. gemini-1.5-flash-latest",
   "openRouterFreeTooltip": "OpenRouter kennzeichnet einige Modelle als kostenlos, erfordert jedoch weiterhin ein aktives Abrechnungsprofil oder ein positives Guthaben, um Anfragen zu stellen.",
   "missingApiKey": "API-Schlüssel fehlt. Setzen Sie die anbieterspezifische Umgebungsvariable in .env.",
   "missingServerApiKey": "Kein API-Schlüssel auf dem Server konfiguriert. Setzen Sie die anbieterspezifische Umgebungsvariable in .env.",
   "errorGenerating": "Fehler beim Generieren des Diagramms. Bitte versuchen Sie es erneut.",
   "loadExample": "Beispiel laden",
   "emptyPrompt": "Bitte geben Sie eine Beschreibung ein.",
-  "translationNotice": "Übersetzungen sind möglicherweise nicht 100% genau."
+  "translationNotice": "Übersetzungen sind möglicherweise nicht 100% genau.",
+  "examplePrompt": "Fragen Sie den Benutzer nach einer Zahl und geben Sie aus, ob sie gerade oder ungerade ist.",
+  "info": "Info",
+  "version": "Version",
+  "author": "Autor",
+  "repository": "Repository",
+  "license": "Lizenz"
 }
