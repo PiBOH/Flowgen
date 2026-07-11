@@ -25,6 +25,7 @@ Il formato è basato su [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 ### Fixed
 - Correzione dell'errore 404 su Gemini causato dal nome modello `gemini-1.5-flash-latest` non valido per l'API v1beta.
 - Correzione della condizione `response_format` per non applicare `json_mode` al provider predefinito OpenRouter.
+- Gestione migliorata degli errori 429 (rate limit) per Gemini, con fallback automatico ai modelli `gemini-1.5-flash` e `gemini-1.5-pro`.
 
 ## [0.1.0] - 2026-07-10
 
