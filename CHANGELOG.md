@@ -6,37 +6,25 @@ Il formato è basato su [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-07-11
+
 ### Added
-- Implementazione completa della webapp Flowgen con Next.js 14, React 18, TypeScript e Tailwind CSS.
-- Canvas interattivo per flowchart basato su React Flow.
-- Generazione di flowchart tramite prompt testuale con supporto multi-provider:
-  - Google Gemini (provider predefinito, modello `gemini-1.5-flash`).
-  - OpenRouter (modello `meta-llama/llama-3.3-70b-instruct:free`).
-  - OpenAI.
-  - Endpoint custom compatibili con OpenAI.
-- Supporto multilingua completo (i18next) per inglese, francese, spagnolo, tedesco e italiano.
-- Esportazione dei flowchart in tutti i formati richiesti:
-  - `.fprg` (Flowgorithm XML) con ricostruzione di strutture nidificate e fallback flat.
-  - `.json` (rappresentazione astratta nodi/archi).
-  - `.svg`, `.png`, `.jpg` tramite `html-to-image`.
-  - `.pdf` tramite `jspdf`.
-- Pannello impostazioni AI per scegliere provider, modello, URL API e chiave API.
-- Endpoint `/api/config` per esporre lo stato della chiave server senza rivelarla.
-- Codici errore strutturati (`FG-001` ... `FG-010`) con documentazione in `docs/ERROR-LIST.md`.
-- Documentazione iniziale in `/docs`: `DISCLAIMER.md`, `PRIVACY.md`, `SECURITY.md`, `ERROR-LIST.md`, `SUPPORTED-MODELS.md`.
-- `README.md` aggiornato con istruzioni di setup, variabili d'ambiente e link alla documentazione.
-- Esempio di flowchart caricabile su richiesta per aiutare l'utente a capire come scrivere un prompt.
-- Tooltip informativo nel pannello impostazioni che spiega la policy "free" di OpenRouter, con supporto mobile.
-- Preset rapidi per provider gratuiti senza carta di credito: Ollama (locale), SambaNova Cloud e GitHub Models.
+- Sezione Info nell'interfaccia con versione, autore, repository e licenza.
+- Dropdown per la selezione del modello Gemini con opzione "Altro (personalizzato)".
+- Esempio di prompt tradotto in tutte le lingue supportate.
+- Chiavi API lette esclusivamente da variabili d'ambiente server-side; rimosso il campo API Key dall'interfaccia.
+- Google Gemini impostato come provider predefinito.
+- Supporto per il parametro `?key=` nell'URL delle richieste Gemini per compatibilità con le chiavi AI Studio.
+- Schema di risposta JSON (`responseSchema`) e migliore gestione degli errori per Gemini.
 
 ### Changed
-- Provider AI predefinito impostato su OpenRouter invece di OpenAI.
-- Riferimenti alle chiavi API aggiornati per usare `.env` come file principale (con `.env.local` come override locale).
-- Migliorata la gestione degli errori dell'AI provider, incluso il riconoscimento specifico dell'errore `402 Payment Required` di OpenRouter.
+- Provider AI predefinito impostato su Google Gemini invece di OpenRouter.
+- Modello Gemini predefinito corretto in `gemini-1.5-flash` per compatibilità con l'API REST v1beta.
+- Aggiornati `README.md`, `docs/SUPPORTED-MODELS.md`, `arenaai.md` e traduzioni i18n.
 
 ### Fixed
+- Correzione dell'errore 404 su Gemini causato dal nome modello `gemini-1.5-flash-latest` non valido per l'API v1beta.
 - Correzione della condizione `response_format` per non applicare `json_mode` al provider predefinito OpenRouter.
-- Correzione di un typo nelle virgolette del prompt di esempio in `lib/examples.ts`.
 
 ## [0.1.0] - 2026-07-10
 
@@ -48,4 +36,5 @@ Il formato è basato su [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ---
 
-[Unreleased]: https://github.com/PiBOH-EDU/Flowgen/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/PiBOH-EDU/Flowgen/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/PiBOH-EDU/Flowgen/compare/v0.1.0...v0.2.0

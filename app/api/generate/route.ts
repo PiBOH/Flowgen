@@ -227,8 +227,12 @@ export async function POST(req: NextRequest) {
         errorMessage = `AI provider error: ${response.status} ${response.statusText}${extraDetail}`;
       }
 
+      const safeDetails = errorText.trimStart().startsWith('<')
+        ? 'HTML error response from provider (truncated).'
+        : errorText;
+
       return NextResponse.json(
-        { code: isPaymentRequired ? 'FG-008' : 'FG-003', error: errorMessage, details: errorText },
+        { code: isPaymentRequired ? 'FG-008' : 'FG-003', error: errorMessage, details: safeDetails },
         { status: 502 }
       );
     }

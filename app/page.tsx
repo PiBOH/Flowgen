@@ -89,14 +89,31 @@ export default function Home() {
         }),
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        const detail = data.details ? `\n\nDetails: ${data.details}` : '';
-        throw new Error((data.error || t('errorGenerating')) + detail);
+      const textBody = await response.text();
+      let data: Record<string, unknown>;
+      try {
+        data = JSON.parse(textBody);
+      } catch {
+        throw new Error(
+          `Unexpected server response (HTTP ${response.status}): ${textBody.slice(0, 200)}...`
+        );
       }
 
-      setFlowchart(data.flowchart);
+      if (!response.ok) {
+        const errorTextValue =
+          typeof data.error === 'string' ? data.error : data.error ? String(data.error) : '';
+        const detail =
+          data.details && typeof data.details === 'string' && !data.details.trimStart().startsWith('<')
+            ? `\n\nDetails: ${data.details}`
+            : '';
+        throw new Error((errorTextValue || t('errorGenerating')) + detail);
+      }
+
+      const flowchartData = data.flowchart as FlowchartModel;
+      if (!flowchartData || !Array.isArray(flowchartData.nodes) || !Array.isArray(flowchartData.edges)) {
+        throw new Error(t('errorGenerating') as string);
+      }
+      setFlowchart(flowchartData);
     } catch (err) {
       setError(err instanceof Error ? err.message : (t('errorGenerating') as string));
     } finally {
