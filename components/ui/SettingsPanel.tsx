@@ -50,6 +50,17 @@ const envKeyNames: Record<AiSettings['provider'], string> = {
   custom: 'CUSTOM_API_KEY',
 };
 
+const geminiModels = [
+  { value: 'gemini-1.5-flash-latest', label: 'Gemini 1.5 Flash (latest)' },
+  { value: 'gemini-1.5-flash-001', label: 'Gemini 1.5 Flash 001' },
+  { value: 'gemini-1.5-pro-latest', label: 'Gemini 1.5 Pro (latest)' },
+  { value: 'gemini-1.5-pro-001', label: 'Gemini 1.5 Pro 001' },
+  { value: 'gemini-2.0-flash-latest', label: 'Gemini 2.0 Flash (latest)' },
+  { value: 'gemini-2.0-flash-001', label: 'Gemini 2.0 Flash 001' },
+];
+
+const geminiModelValues = new Set(geminiModels.map((m) => m.value));
+
 export default function SettingsPanel({ value, onChange }: SettingsPanelProps) {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
@@ -117,17 +128,41 @@ export default function SettingsPanel({ value, onChange }: SettingsPanelProps) {
                   </Tooltip>
                 )}
               </div>
-              <input
-                type="text"
-                value={value.model}
-                onChange={(e) => handleChange('model', e.target.value)}
-                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
-                placeholder={
-                  value.provider === 'gemini'
-                    ? (t('geminiModelPlaceholder') as string)
-                    : (t('modelPlaceholder') as string)
-                }
-              />
+              {value.provider === 'gemini' ? (
+                <div className="space-y-2">
+                  <select
+                    value={geminiModelValues.has(value.model) ? value.model : 'custom'}
+                    onChange={(e) =>
+                      handleChange('model', e.target.value === 'custom' ? '' : e.target.value)
+                    }
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  >
+                    {geminiModels.map((m) => (
+                      <option key={m.value} value={m.value}>
+                        {m.label}
+                      </option>
+                    ))}
+                    <option value="custom">{t('otherModel') as string}</option>
+                  </select>
+                  {!geminiModelValues.has(value.model) && (
+                    <input
+                      type="text"
+                      value={value.model}
+                      onChange={(e) => handleChange('model', e.target.value)}
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      placeholder={t('geminiModelPlaceholder') as string}
+                    />
+                  )}
+                </div>
+              ) : (
+                <input
+                  type="text"
+                  value={value.model}
+                  onChange={(e) => handleChange('model', e.target.value)}
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  placeholder={t('modelPlaceholder') as string}
+                />
+              )}
             </div>
 
             {value.provider === 'custom' && (

@@ -23,6 +23,7 @@
   "modelPlaceholder": "ex. gpt-4o-mini",
   "apiUrl": "URL API",
   "geminiModelPlaceholder": "ex. gemini-1.5-flash-latest",
+  "otherModel": "Autre (personnalisé)",
   "openRouterFreeTooltip": "OpenRouter marque certains modèles comme gratuits, mais nécessite toujours un profil de facturation actif ou un solde positif pour effectuer des requêtes.",
   "missingApiKey": "Clé API manquante. Définissez la variable d'environnement spécifique au fournisseur dans .env.",
   "missingServerApiKey": "Aucune clé API n'est configurée sur le serveur. Définissez la variable d'environnement spécifique au fournisseur dans .env.",
