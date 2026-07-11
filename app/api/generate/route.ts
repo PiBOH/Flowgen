@@ -103,7 +103,7 @@ function getApiConfig(body: GenerateRequest) {
       };
     }
     case 'gemini': {
-      const geminiModel = body.model || 'gemini-1.5-flash-latest';
+      const geminiModel = body.model || 'gemini-1.5-flash';
       const geminiApiKey = process.env.GEMINI_API_KEY?.trim() || '';
       return {
         url: `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(geminiModel)}:generateContent?key=${encodeURIComponent(geminiApiKey)}`,

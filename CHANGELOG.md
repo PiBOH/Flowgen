@@ -10,7 +10,7 @@ Il formato è basato su [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 - Implementazione completa della webapp Flowgen con Next.js 14, React 18, TypeScript e Tailwind CSS.
 - Canvas interattivo per flowchart basato su React Flow.
 - Generazione di flowchart tramite prompt testuale con supporto multi-provider:
-  - Google Gemini (provider predefinito, modello `gemini-1.5-flash-latest`).
+  - Google Gemini (provider predefinito, modello `gemini-1.5-flash`).
   - OpenRouter (modello `meta-llama/llama-3.3-70b-instruct:free`).
   - OpenAI.
   - Endpoint custom compatibili con OpenAI.

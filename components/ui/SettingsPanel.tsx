@@ -39,7 +39,7 @@ interface SettingsPanelProps {
 const defaultModels: Record<AiSettings['provider'], string> = {
   openai: 'gpt-4o-mini',
   openrouter: 'meta-llama/llama-3.3-70b-instruct:free',
-  gemini: 'gemini-1.5-flash-latest',
+  gemini: 'gemini-1.5-flash',
   custom: '',
 };
 
@@ -51,11 +51,11 @@ const envKeyNames: Record<AiSettings['provider'], string> = {
 };
 
 const geminiModels = [
-  { value: 'gemini-1.5-flash-latest', label: 'Gemini 1.5 Flash (latest)' },
+  { value: 'gemini-1.5-flash', label: 'Gemini 1.5 Flash' },
   { value: 'gemini-1.5-flash-001', label: 'Gemini 1.5 Flash 001' },
-  { value: 'gemini-1.5-pro-latest', label: 'Gemini 1.5 Pro (latest)' },
+  { value: 'gemini-1.5-pro', label: 'Gemini 1.5 Pro' },
   { value: 'gemini-1.5-pro-001', label: 'Gemini 1.5 Pro 001' },
-  { value: 'gemini-2.0-flash-latest', label: 'Gemini 2.0 Flash (latest)' },
+  { value: 'gemini-2.0-flash', label: 'Gemini 2.0 Flash' },
   { value: 'gemini-2.0-flash-001', label: 'Gemini 2.0 Flash 001' },
 ];
 

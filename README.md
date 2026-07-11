@@ -58,7 +58,7 @@ Create a `.env` file in the project root (or use `.env.local` for local override
 
 The API route supports:
 
-- **Google Gemini** (default — e.g. `gemini-1.5-flash-latest`, free tier via Google AI Studio)
+- **Google Gemini** (default — e.g. `gemini-1.5-flash`, free tier via Google AI Studio)
 - **OpenRouter** (e.g. `meta-llama/llama-3.3-70b-instruct:free`)
 - **OpenAI** (e.g. `gpt-4o-mini`)
 - **Custom endpoints** compatible with OpenAI chat completions format

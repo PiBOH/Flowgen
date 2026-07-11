@@ -6,7 +6,7 @@ Flowgen supports both built-in providers and any AI provider that exposes an Ope
 
 | Provider | Default model | Notes |
 |---|---|---|
-| **Google Gemini** | `gemini-1.5-flash-latest` | **Default provider**. Native Gemini API support; free tier available via Google AI Studio. |
+| **Google Gemini** | `gemini-1.5-flash` | **Default provider**. Native Gemini API support; free tier available via Google AI Studio. |
 | **OpenRouter** | `meta-llama/llama-3.3-70b-instruct:free` | Supports many open and commercial models. |
 | **OpenAI** | `gpt-4o-mini` | Reliable JSON output, good instruction following. |
 | **Custom** | — | Any endpoint compatible with `/v1/chat/completions`. |
@@ -64,11 +64,11 @@ If you do not have a credit card, you still have a few options.
 
 ### 4. Google Gemini (free tier)
 
-[Google Gemini](https://ai.google.dev/) offers a free tier with rate limits. Note that there is no "Gemini 3.5 Flash"; the correct model names are `gemini-1.5-flash-latest` or `gemini-2.0-flash`.
+[Google Gemini](https://ai.google.dev/) offers a free tier with rate limits. Note that there is no "Gemini 3.5 Flash"; the correct model names are `gemini-1.5-flash` or `gemini-2.0-flash`.
 
 1. Get a free API key from [Google AI Studio](https://aistudio.google.com/app/apikey).
 2. In Flowgen Settings, select **Google Gemini** as the provider.
-3. Paste your API key and, if you want, change the model (default is `gemini-1.5-flash-latest`).
+3. Paste your API key and, if you want, change the model (default is `gemini-1.5-flash`).
 
 **Note**: the key from AI Studio is sent to the Gemini API in a request header. Make sure you keep it secret and do not commit it to version control. You can also set `GEMINI_API_KEY` on the server (`.env`, `.env.local` or Vercel Environment Variables) and leave the Settings field empty.
 
