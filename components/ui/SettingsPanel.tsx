@@ -51,12 +51,13 @@ const envKeyNames: Record<AiSettings['provider'], string> = {
 };
 
 const geminiModels = [
-  { value: 'gemini-1.5-flash', label: 'Gemini 1.5 Flash' },
-  { value: 'gemini-1.5-flash-001', label: 'Gemini 1.5 Flash 001' },
-  { value: 'gemini-1.5-pro', label: 'Gemini 1.5 Pro' },
-  { value: 'gemini-1.5-pro-001', label: 'Gemini 1.5 Pro 001' },
-  { value: 'gemini-2.0-flash', label: 'Gemini 2.0 Flash' },
-  { value: 'gemini-2.0-flash-001', label: 'Gemini 2.0 Flash 001' },
+  { value: 'gemini-1.5-flash', label: 'gemini-1.5-flash' },
+  { value: 'gemini-1.5-flash-001', label: 'gemini-1.5-flash-001' },
+  { value: 'gemini-1.5-pro', label: 'gemini-1.5-pro' },
+  { value: 'gemini-1.5-pro-001', label: 'gemini-1.5-pro-001' },
+  { value: 'gemini-2.0-flash', label: 'gemini-2.0-flash' },
+  { value: 'gemini-2.0-flash-001', label: 'gemini-2.0-flash-001' },
+  { value: 'gemini-3.5-flash', label: 'gemini-3.5-flash' },
 ];
 
 const geminiModelValues = new Set(geminiModels.map((m) => m.value));
