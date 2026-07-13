@@ -32,6 +32,7 @@
   "emptyPrompt": "Veuillez entrer une description.",
   "translationNotice": "Les traductions peuvent ne pas être 100% exactes.",
   "examplePrompt": "Demandez à l'utilisateur un nombre et affichez s'il est pair ou impair.",
+  "fallbackNotification": "Le modèle '{{model}}' a été utilisé en raison d'une limitation de débit sur le modèle sélectionné.",
   "info": "Info",
   "version": "Version",
   "author": "Auteur",

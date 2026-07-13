@@ -32,6 +32,7 @@
   "emptyPrompt": "Por favor, introduce una descripción.",
   "translationNotice": "Las traducciones pueden no ser 100% exactas.",
   "examplePrompt": "Pídele al usuario un número e imprime si es par o impar.",
+  "fallbackNotification": "Se utilizó el modelo '{{model}}' debido a la limitación de velocidad en el modelo seleccionado.",
   "info": "Info",
   "version": "Versión",
   "author": "Autor",

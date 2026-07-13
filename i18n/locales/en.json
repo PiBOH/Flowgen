@@ -32,6 +32,7 @@
   "emptyPrompt": "Please enter a description.",
   "translationNotice": "Translations may not be 100% accurate.",
   "examplePrompt": "Ask the user for a number and print whether it is even or odd.",
+  "fallbackNotification": "Model '{{model}}' was used due to rate limiting on your selected model.",
   "info": "Info",
   "version": "Version",
   "author": "Author",

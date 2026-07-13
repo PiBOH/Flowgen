@@ -48,6 +48,7 @@ export default function Home() {
   const [settings, setSettings] = useState<AiSettings>(defaultSettings);
   const [hasServerKey, setHasServerKey] = useState<boolean | null>(null);
   const [prompt, setPrompt] = useState('');
+  const [fallbackModel, setFallbackModel] = useState<string | null>(null);
   const canvasRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -114,6 +115,11 @@ export default function Home() {
         throw new Error(t('errorGenerating') as string);
       }
       setFlowchart(flowchartData);
+      if (typeof data.fallbackModel === 'string') {
+        setFallbackModel(data.fallbackModel);
+      } else {
+        setFallbackModel(null);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : (t('errorGenerating') as string));
     } finally {
@@ -156,6 +162,24 @@ export default function Home() {
           {showApiKeyWarning && (
             <div className="p-4 bg-amber-50 border border-amber-200 rounded-lg text-amber-800 text-sm">
               {t('missingServerApiKey')}
+            </div>
+          )}
+
+          {fallbackModel && (
+            <div className="flex items-start gap-3 p-4 bg-blue-50 border border-blue-200 rounded-lg text-blue-700 text-sm">
+              <div className="flex-1">
+                {t('fallbackNotification', { model: fallbackModel })}
+              </div>
+              <button
+                onClick={() => setFallbackModel(null)}
+                className="flex-shrink-0 text-blue-400 hover:text-blue-600 transition-colors"
+                aria-label="Dismiss"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
             </div>
           )}
 

@@ -32,6 +32,7 @@
   "emptyPrompt": "Bitte geben Sie eine Beschreibung ein.",
   "translationNotice": "Übersetzungen sind möglicherweise nicht 100% genau.",
   "examplePrompt": "Fragen Sie den Benutzer nach einer Zahl und geben Sie aus, ob sie gerade oder ungerade ist.",
+  "fallbackNotification": "Modell '{{model}}' wurde aufgrund der Ratenbegrenzung für das ausgewählte Modell verwendet.",
   "info": "Info",
   "version": "Version",
   "author": "Autor",

@@ -323,6 +323,7 @@ export async function POST(req: NextRequest) {
         : [config.model];
 
     let lastError: { error: string; details: string; code: string } | null = null;
+    let fallbackUsed = false;
 
     for (const model of modelsToTry) {
       const modelConfig = getApiConfig(request, model);
@@ -332,6 +333,7 @@ export async function POST(req: NextRequest) {
       if (!result.ok) {
         lastError = { error: result.error, details: result.details, code: result.code };
         if (result.status === 429) {
+          fallbackUsed = true;
           // eslint-disable-next-line no-console
           console.error(`Gemini model "${model}" rate limited; trying fallback...`);
           continue;
@@ -347,7 +349,11 @@ export async function POST(req: NextRequest) {
         return NextResponse.json(parsed, { status: 502 });
       }
 
-      return NextResponse.json({ flowchart: parsed.flowchart });
+      const responsePayload: Record<string, unknown> = { flowchart: parsed.flowchart };
+      if (fallbackUsed) {
+        responsePayload.fallbackModel = model;
+      }
+      return NextResponse.json(responsePayload);
     }
 
     if (lastError) {

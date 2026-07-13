@@ -32,6 +32,7 @@
   "emptyPrompt": "Inserisci una descrizione.",
   "translationNotice": "Le traduzioni potrebbero non essere perfette al 100%.",
   "examplePrompt": "Chiedi all'utente un numero e stampa se è pari o dispari.",
+  "fallbackNotification": "Modello '{{model}}' utilizzato a causa del rate limit sul modello selezionato.",
   "info": "Info",
   "version": "Versione",
   "author": "Autore",
