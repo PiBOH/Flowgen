@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Settings, HelpCircle } from 'lucide-react';
+import { Settings, HelpCircle, RefreshCw } from 'lucide-react';
 import { AiSettings } from '@/lib/types';
 import { useOnClickOutside } from '@/hooks/useOnClickOutside';
 import Tooltip from './Tooltip';
@@ -39,7 +39,7 @@ interface SettingsPanelProps {
 const defaultModels: Record<AiSettings['provider'], string> = {
   openai: 'gpt-4o-mini',
   openrouter: 'meta-llama/llama-3.3-70b-instruct:free',
-  gemini: 'gemini-1.5-flash',
+  gemini: 'gemini-2.5-flash',
   custom: '',
 };
 
@@ -51,20 +51,31 @@ const envKeyNames: Record<AiSettings['provider'], string> = {
 };
 
 const geminiModels = [
+  { value: 'gemini-2.5-flash', label: 'gemini-2.5-flash' },
+  { value: 'gemini-2.5-flash-lite', label: 'gemini-2.5-flash-lite' },
+  { value: 'gemini-2.5-pro', label: 'gemini-2.5-pro' },
+  { value: 'gemini-2.0-flash', label: 'gemini-2.0-flash' },
+  { value: 'gemini-2.0-flash-001', label: 'gemini-2.0-flash-001' },
   { value: 'gemini-1.5-flash', label: 'gemini-1.5-flash' },
   { value: 'gemini-1.5-flash-001', label: 'gemini-1.5-flash-001' },
   { value: 'gemini-1.5-pro', label: 'gemini-1.5-pro' },
   { value: 'gemini-1.5-pro-001', label: 'gemini-1.5-pro-001' },
-  { value: 'gemini-2.0-flash', label: 'gemini-2.0-flash' },
-  { value: 'gemini-2.0-flash-001', label: 'gemini-2.0-flash-001' },
-  { value: 'gemini-3.5-flash', label: 'gemini-3.5-flash' },
 ];
 
 const geminiModelValues = new Set(geminiModels.map((m) => m.value));
 
+interface LiveModel {
+  name: string;
+  displayName: string;
+  description?: string;
+}
+
 export default function SettingsPanel({ value, onChange }: SettingsPanelProps) {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
+  const [liveModels, setLiveModels] = useState<LiveModel[] | null>(null);
+  const [refreshingModels, setRefreshingModels] = useState(false);
+  const [modelsError, setModelsError] = useState<string | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
   useOnClickOutside(panelRef, () => setIsOpen(false));
@@ -76,6 +87,32 @@ export default function SettingsPanel({ value, onChange }: SettingsPanelProps) {
     }
     onChange(next);
   };
+
+  const refreshModels = useCallback(async () => {
+    setRefreshingModels(true);
+    setModelsError(null);
+    try {
+      const res = await fetch('/api/models');
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to fetch models');
+      }
+      if (Array.isArray(data.models) && data.models.length > 0) {
+        setLiveModels(data.models);
+      } else {
+        setModelsError('No models returned from API');
+      }
+    } catch (err) {
+      setModelsError(err instanceof Error ? err.message : 'Failed to refresh models');
+    } finally {
+      setRefreshingModels(false);
+    }
+  }, []);
+
+  const availableGeminiModels = liveModels && liveModels.length > 0
+    ? liveModels.map((m) => ({ value: m.name, label: m.displayName }))
+    : geminiModels;
+  const availableGeminiModelValues = new Set(availableGeminiModels.map((m) => m.value));
 
   return (
     <div ref={panelRef} className="relative">
@@ -131,21 +168,43 @@ export default function SettingsPanel({ value, onChange }: SettingsPanelProps) {
               </div>
               {value.provider === 'gemini' ? (
                 <div className="space-y-2">
-                  <select
-                    value={geminiModelValues.has(value.model) ? value.model : 'custom'}
-                    onChange={(e) =>
-                      handleChange('model', e.target.value === 'custom' ? '' : e.target.value)
-                    }
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
-                  >
-                    {geminiModels.map((m) => (
-                      <option key={m.value} value={m.value}>
-                        {m.label}
-                      </option>
-                    ))}
-                    <option value="custom">{t('otherModel') as string}</option>
-                  </select>
-                  {!geminiModelValues.has(value.model) && (
+                  <div className="flex items-center gap-2">
+                    <select
+                      value={availableGeminiModelValues.has(value.model) ? value.model : 'custom'}
+                      onChange={(e) =>
+                        handleChange('model', e.target.value === 'custom' ? '' : e.target.value)
+                      }
+                      className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    >
+                      {availableGeminiModels.map((m) => (
+                        <option key={m.value} value={m.value}>
+                          {m.label}
+                        </option>
+                      ))}
+                      <option value="custom">{t('otherModel') as string}</option>
+                    </select>
+                    <button
+                      type="button"
+                      onClick={refreshModels}
+                      disabled={refreshingModels}
+                      className="flex-shrink-0 p-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      title="Refresh models from API"
+                    >
+                      <RefreshCw
+                        size={16}
+                        className={refreshingModels ? 'animate-spin' : ''}
+                      />
+                    </button>
+                  </div>
+                  {liveModels && (
+                    <p className="text-[10px] text-green-600">
+                      {liveModels.length} models loaded from API
+                    </p>
+                  )}
+                  {modelsError && (
+                    <p className="text-[10px] text-amber-600">{modelsError}</p>
+                  )}
+                  {!availableGeminiModelValues.has(value.model) && (
                     <input
                       type="text"
                       value={value.model}

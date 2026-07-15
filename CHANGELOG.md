@@ -6,6 +6,24 @@ Il formato è basato su [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ## [Unreleased]
 
+### Added
+- Migrazione al SDK ufficiale `@google/generative-ai` (v0.24.1) per le chiamate Gemini, in sostituzione delle chiamate REST dirette.
+- Endpoint API `/api/models` che interroga `models.list` di Gemini per ottenere la lista aggiornata dei modelli disponibili.
+- Pulsante "Refresh models" nelle impostazioni Gemini che carica i modelli in tempo reale dall'API e popola il dropdown.
+- Modelli Gemini aggiornati: aggiunti `gemini-2.5-flash`, `gemini-2.5-flash-lite` e `gemini-2.5-pro`; rimosso `gemini-3.5-flash` (inesistente) e sostituito `gemini-2.0-flash-lite` (deprecato).
+
+### Changed
+- Modello Gemini predefinito aggiornato da `gemini-1.5-flash` a `gemini-2.5-flash`.
+- Modelli di fallback Gemini aggiornati: `['gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-1.5-pro']`.
+- Placeholder del modello Gemini in tutte le 5 lingue aggiornato da `gemini-1.5-flash` a `gemini-2.5-flash`.
+- `getApiConfig` ora usa `'openai'` come provider predefinito invece di `'gemini'` (Gemini ha un percorso SDK separato).
+- `parseFlowchart` rinominata in `parseNonGeminiFlowchart` poiché ora gestisce solo provider non-Gemini.
+- Rimosso codice Gemini-specifico (`responseSchema` REST, parsing `candidates[0]`, errori 404/429) dai gestori dei provider non-Gemini.
+
+### Fixed
+- Gestione errori SDK con `GoogleGenerativeAIFetchError` per rilevare correttamente rate limit (429) e altri errori di fetch.
+- Schema JSON tipizzato con `SchemaType.OBJECT` e `properties: {}` per soddisfare i tipi strict del SDK.
+
 ## [0.2.0] - 2026-07-11
 
 ### Added

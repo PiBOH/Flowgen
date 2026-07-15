@@ -36,7 +36,7 @@ const defaultFlowchart: FlowchartModel = {
 
 const defaultSettings: AiSettings = {
   provider: 'gemini',
-  model: 'gemini-1.5-flash',
+  model: 'gemini-2.5-flash',
   apiUrl: '',
 };
 

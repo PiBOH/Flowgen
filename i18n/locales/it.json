@@ -22,7 +22,7 @@
   "model": "Modello",
   "modelPlaceholder": "es. gpt-4o-mini",
   "apiUrl": "URL API",
-  "geminiModelPlaceholder": "es. gemini-1.5-flash",
+  "geminiModelPlaceholder": "es. gemini-2.5-flash",
   "otherModel": "Altro (personalizzato)",
   "openRouterFreeTooltip": "OpenRouter contrassegna alcuni modelli come Free, ma richiede comunque un profilo di fatturazione attivo o un saldo positivo per effettuare richieste.",
   "missingApiKey": "Chiave API mancante. Imposta la variabile d'ambiente specifica del provider in .env.",
